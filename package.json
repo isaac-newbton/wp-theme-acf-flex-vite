@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "sass": "^1.89.1",
+    "vite": "^6.3.5"
+  },
+  "scripts": {
+    "start": "vite build --watch",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "browserslist": [
+    "> 1%, last 2 versions, not dead"
+  ]
+}

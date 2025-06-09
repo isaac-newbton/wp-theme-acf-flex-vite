@@ -1,0 +1,46 @@
+@use "variables" as *;
+
+@font-face {
+    font-family: 'Tinos';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/Tinos-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Tinos';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/Tinos-Italic.ttf');
+}
+
+@font-face {
+    font-family: 'Tinos';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/Tinos-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Tinos';
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/Tinos-BoldItalic.ttf');
+}
+
+body {
+    font-family: $font-main;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font-heading;
+}

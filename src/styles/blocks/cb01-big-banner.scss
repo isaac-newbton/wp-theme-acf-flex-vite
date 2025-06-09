@@ -1,0 +1,6 @@
+@use "../general/variables" as *;
+
+.cb01-big-banner {
+    min-height: 100vh;
+    background-color: $color-main;
+}

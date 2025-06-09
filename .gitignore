@@ -1,0 +1,11 @@
+.htaccess
+*.log
+
+# ignore node dependency directories
+node_modules/
+
+# vscode
+.vscode/
+
+# theme dist files
+/dist/

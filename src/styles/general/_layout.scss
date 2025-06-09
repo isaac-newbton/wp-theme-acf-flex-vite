@@ -1,0 +1,6 @@
+@use "variables" as *;
+
+section {
+    max-width: $frame-width;
+    margin-inline: auto;
+}
