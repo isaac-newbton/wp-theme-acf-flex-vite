@@ -29,7 +29,8 @@ export default defineConfig({
     rollupOptions: {
       input: [
         'src/scripts/main.js',
-        'src/styles/main.scss'
+        'src/styles/main.scss',
+        'src/admin/styles/main.scss'
       ],
       output: {
         entryFileNames: '[hash].js',

@@ -1,0 +1,44 @@
+.acf-field {
+
+    &.flex-banner {
+
+        .acf-actions {
+
+            > .acf-button {
+                display: block;
+                text-align: center;
+            }
+        }
+
+        .acf-flexible-content.-empty {
+
+            .acf-actions > .acf-button {
+                padding-block: 40px;
+                background-color: transparent;
+                color: #000000;
+                border: 2px dashed #ccc;
+
+                &:hover, &:focus {
+                    background-color: #dfd;
+                }
+            }
+        }
+
+        .acf-flexible-content:not(.-empty) {
+
+            .acf-actions > .acf-button {
+                display: none;
+            }
+        }
+
+        > .acf-input {
+
+            > .acf-flexible-content {
+
+                > .no-value-message {
+                    display: none;
+                }
+            }
+        }
+    }
+}
