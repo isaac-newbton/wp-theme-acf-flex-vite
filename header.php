@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <?php get_template_part('template-parts/header', 'skiplink'); ?>
+    <?php get_template_part('template-parts/layout-header', 'skiplink'); ?>
     <header id="site-header">
 
     </header>

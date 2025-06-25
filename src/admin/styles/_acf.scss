@@ -41,4 +41,20 @@
             }
         }
     }
+
+    &.acf-field-message.screenshot {
+
+        > .acf-label {
+            display: none;
+        }
+
+        > .acf-input > img {
+            display: block;
+            width: 100%;
+            max-height: 50vh;
+            object-fit: contain;
+            object-position: top left;
+        }
+
+    }
 }

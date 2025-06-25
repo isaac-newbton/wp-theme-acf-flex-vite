@@ -13,7 +13,7 @@ if(!defined('P10_THEME_ACF_DIR')) {
     define('P10_THEME_ACF_DIR', get_template_directory() . '/acf-json');
 }
 if(!defined('P10_BLOCK_SCREENSHOTS_URL')) {
-    define('P10_BLOCK_SCREENSHOTS_URL', get_template_directory_uri() . '/src/images/screenshots');
+    define('P10_BLOCK_SCREENSHOTS_URL', parse_url(get_template_directory_uri(), PHP_URL_PATH) . '/src/images/screenshots');
 }
 
 function p10_add_block_generator_menu_page()
@@ -53,7 +53,7 @@ function p10_block_generator_admin_page()
                     if(!file_exists($block['assets']['template'])) {
                         if($f = fopen($block['assets']['template'], 'w')) {
                             $class_string = esc_attr($block['class_name'] . ' ' . $block['class_name_short'] . ' p10-block' . ($block['banner'] ? ' p10-banner-block' : ''));
-                            fwrite($f, '<?php' . PHP_EOL . PHP_EOL . '?>' . PHP_EOL . PHP_EOL . "<section class=\"$class_string\" <?=flex_block_id()?> <?=flex_block_adjacent_attr(\$args)?> >" . PHP_EOL . PHP_EOL . '</section>');
+                            fwrite($f, '<?php' . PHP_EOL . PHP_EOL . '?>' . PHP_EOL . PHP_EOL . "<section class=\"$class_string\" <?=flex_block_id()?> <?=flex_block_adjacent_attr(\$args)?> >" . PHP_EOL . $block['full_name'] . PHP_EOL . '</section>');
                             fclose($f);
                             $result['template'] = file_exists($block['assets']['template']) ? $block['assets']['template'] : false;
                         }
@@ -91,6 +91,24 @@ function p10_block_generator_admin_page()
     "fields": [
         {
             "key": "<?=uniqid('field_')?>",
+            "label": "Content",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "<?=uniqid('field_')?>",
             "label": "Settings",
             "name": "",
             "aria-label": "",
@@ -117,7 +135,7 @@ function p10_block_generator_admin_page()
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "35",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -130,6 +148,27 @@ function p10_block_generator_admin_page()
         },
         {
             "key": "<?=uniqid('field_')?>",
+            "label": "Extra CSS Class",
+            "name": "extra_css_class",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional CSS class(es) - separate with spaces.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "<?=uniqid('field_')?>",
             "label": "Screenshot",
             "name": "",
             "aria-label": "",
@@ -138,31 +177,13 @@ function p10_block_generator_admin_page()
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "65",
-                "class": "",
+                "width": "75",
+                "class": "screenshot",
                 "id": ""
             },
-            "message": "<img src=\"<?=P10_BLOCK_SCREENSHOTS_URL . "cb{$block['cb']}"?>\" alt=\"<?=$block['label']?>\">",
+            "message": "<img src=\"<?=P10_BLOCK_SCREENSHOTS_URL . "/cb{$block['cb']}.png"?>\" alt=\"<?=$block['label']?>\">",
             "new_lines": "",
             "esc_html": 0
-        },
-        {
-            "key": "<?=uniqid('field_')?>",
-            "label": "Content",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "left",
-            "endpoint": 0,
-            "selected": 0
         }
     ],
     "location": [
@@ -183,7 +204,7 @@ function p10_block_generator_admin_page()
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": <?=time()?>
+    "modified": <?=time() . PHP_EOL?>
 }
 <?php
                             $file_contents = ob_get_clean();
@@ -197,7 +218,7 @@ function p10_block_generator_admin_page()
                 $block_groups[$block['banner'] ? 'banners' : 'content'][] = $block;
                 $attempted[] = $result;
             }
-            $flex_content_group_key = uniqid('group_fc');
+            $flex_content_group_key = uniqid('group_10fc');
             $flex_content_banner_key = uniqid('field_ba');
             $flex_content_content_key = uniqid('field_c0');
             $flex_content_json_file = P10_THEME_ACF_DIR . "/$flex_content_group_key.json";
@@ -222,7 +243,7 @@ function p10_block_generator_admin_page()
                 "class": "flex-banner",
                 "id": ""
             },
-            "layouts": {<?php 
+            "layouts": {<?php echo PHP_EOL;
                     if(!empty($block_groups['banners'])):
                         foreach($block_groups['banners'] as $i => $block_group):
                             $layout_key = uniqid('layout_');
@@ -248,7 +269,7 @@ function p10_block_generator_admin_page()
                                 "id": ""
                             },
                             "clone": [
-                                "<?=$block_group['acf_group']?>"
+                                "<?=$block_group['assets']['acf_group']?>"
                             ],
                             "display": "seamless",
                             "layout": "",
@@ -258,7 +279,7 @@ function p10_block_generator_admin_page()
                     ],
                     "min": "",
                     "max": ""
-                }<?php echo ($i < count($block_group) - 1) ? ',' : ''; endforeach; endif; ?>
+                }<?php echo (($i < count($block_groups['banners']) - 1) ? ',' : '') . PHP_EOL; endforeach; endif; ?>
             },
             "min": "",
             "max": 1,
@@ -278,7 +299,7 @@ function p10_block_generator_admin_page()
                 "class": "flex-content",
                 "id": ""
             },
-            "layouts": {<?php 
+            "layouts": {<?php echo PHP_EOL;
                     if(!empty($block_groups['content'])):
                         foreach($block_groups['content'] as $i => $block_group):
                             $layout_key = uniqid('layout_');
@@ -304,7 +325,7 @@ function p10_block_generator_admin_page()
                                 "id": ""
                             },
                             "clone": [
-                                "<?=$block_group['acf_group']?>"
+                                "<?=$block_group['assets']['acf_group']?>"
                             ],
                             "display": "seamless",
                             "layout": "",
@@ -314,7 +335,7 @@ function p10_block_generator_admin_page()
                     ],
                     "min": "",
                     "max": ""
-                }<?php echo ($i < count($block_group) - 1) ? ',' : ''; endforeach; endif; ?>
+                }<?php echo (($i < count($block_groups['content']) - 1) ? ',' : '') . PHP_EOL; endforeach; endif; ?>
             },
             "min": "",
             "max": "",
@@ -346,7 +367,7 @@ function p10_block_generator_admin_page()
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": <?=time()?>
+    "modified": <?=time() . PHP_EOL?>
 }
 <?php
                     $file_contents = ob_get_clean();
