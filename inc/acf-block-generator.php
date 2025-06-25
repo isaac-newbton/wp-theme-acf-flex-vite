@@ -224,7 +224,7 @@ function p10_block_generator_admin_page()
             },
             "layouts": {<?php 
                     if(!empty($block_groups['banners'])):
-                        foreach($block_groups['banners'] as $block_group):
+                        foreach($block_groups['banners'] as $i => $block_group):
                             $layout_key = uniqid('layout_');
                 ?>
                 "<?=$layout_key?>": {
@@ -258,7 +258,7 @@ function p10_block_generator_admin_page()
                     ],
                     "min": "",
                     "max": ""
-                }<?php endforeach; endif; ?>
+                }<?php echo ($i < count($block_group) - 1) ? ',' : ''; endforeach; endif; ?>
             },
             "min": "",
             "max": 1,
@@ -280,7 +280,7 @@ function p10_block_generator_admin_page()
             },
             "layouts": {<?php 
                     if(!empty($block_groups['content'])):
-                        foreach($block_groups['content'] as $block_group):
+                        foreach($block_groups['content'] as $i => $block_group):
                             $layout_key = uniqid('layout_');
                 ?>
                 "<?=$layout_key?>": {
@@ -314,7 +314,7 @@ function p10_block_generator_admin_page()
                     ],
                     "min": "",
                     "max": ""
-                }<?php endforeach; endif; ?>
+                }<?php echo ($i < count($block_group) - 1) ? ',' : ''; endforeach; endif; ?>
             },
             "min": "",
             "max": "",

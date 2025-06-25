@@ -30,7 +30,7 @@ if (!function_exists('flex_block_adjacent_attr')) {
 }
 
 if (function_exists('have_rows')) {
-    function flex_content_loop($sections = ['content'])
+    function flex_content_loop($sections = ['banner', 'content'])
     {
         if (!is_array($sections) || empty($sections)) return false;
         $content_list = [];
